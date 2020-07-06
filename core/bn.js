@@ -25,7 +25,12 @@ sjcl.bn.prototype = {
     var i=0, k;
     switch(typeof it) {
     case "object":
-      this.limbs = it.limbs.slice(0);
+      // if object is an array, this is a bitArray passed in, otherwise it is already a big number
+      if (Array.isArray(it)) {
+        this.limbs = sjcl.bn.fromBits(it).limbs
+      } else {
+        this.limbs = it.limbs.slice(0);
+      }
       break;
 
     case "number":
